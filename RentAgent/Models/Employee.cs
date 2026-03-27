@@ -2,7 +2,7 @@
 
 public class Employee : User
 {
-    public string Department { get; set; }
+    public string Department {get; set;}
 
     public Employee(string firstName, string lastName, string department)
         : base(firstName, lastName)
