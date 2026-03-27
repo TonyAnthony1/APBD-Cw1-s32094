@@ -22,7 +22,7 @@ public class EquipmentService : IEquipmentService
         return _equipments.Where(e => e.IsAvailable()).ToList();
     }
 
-    public Equipment GetEquipmentById(int id)
+    public Equipment? GetEquipmentById(int id)
     {
         return _equipments.FirstOrDefault(e => e.Id == id);
     }
