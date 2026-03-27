@@ -31,9 +31,18 @@ public class EquipmentService : IEquipmentService
     {
         var found = GetEquipmentById(equipment.Id);
         if (found == null)
+        {
             Console.WriteLine("Equipment not found");
+            return;
+        }
+
         if (found.Status == EquipmentStatus.Reserved)
+        {
+
+
             Console.WriteLine("Equipment is reserved at the moment");
+            return;
+        }
 
         found.Status = EquipmentStatus.Unavailable;
     }
