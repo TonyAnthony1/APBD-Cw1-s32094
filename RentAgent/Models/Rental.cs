@@ -26,7 +26,7 @@ public class Rental
 
     public bool Overdue => Active && DateTime.Now > DueDate;
 
-    public bool ReturnedLate => (ReturnDate != null) && (ReturnDate > DueDate);
+    public bool ReturnedLate =>  ReturnDate > DueDate;
 
     public void CompleteReturn(DateTime returnDate, decimal penaltyFee)
     {
@@ -56,8 +56,8 @@ public class Rental
         var status = Active ? "Active" : "Finished";
         var penalty = PenaltyFee > 0 ? $" | Penalty: {PenaltyFee:C}" : "";
         var returnInfo = ReturnDate.HasValue ? $" | Return: {ReturnDate.Value:d}" : "";
-        return $"[{Id}] {status} | {User.FullName} -> {Equipment.Name} | " +
-               $"Od: {RentDate:d} | Termin: {DueDate:d}{returnInfo}{penalty}";
+        return $"[{Id}] {status} | {User.FirstName} {User.LastName} -> {Equipment.Name} | " +
+               $"Since: {RentDate:d} | Due: {DueDate:d}{returnInfo}{penalty}";
     }
     
     
