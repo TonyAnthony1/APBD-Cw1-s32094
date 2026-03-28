@@ -5,7 +5,7 @@ public class Rental
     public int Id { get; }
     public User User { get; }
     public DateTime RentDate { get; }
-    public Equipment Equipment { get; }
+    public Equipment Equipment {get;}
     
     public DateTime DueDate { get; }
     public DateTime? ReturnDate { get; set; }

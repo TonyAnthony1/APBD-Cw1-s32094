@@ -1,11 +1,11 @@
 ﻿namespace RentAgent.Models;
 
-public class Monitor : Equipment
+public class DisplayMonitor : Equipment
 {
     public int RefreshRate { get; set; }
     public string Resolution { get; set; }
 
-    public Monitor(string name, string description, int productionYear, int refreshRate, string resolution) : base(name, description, productionYear)
+    public DisplayMonitor(string name, string description, int productionYear, int refreshRate, string resolution) : base(name, description, productionYear)
     {
         RefreshRate = refreshRate;
         Resolution = resolution;

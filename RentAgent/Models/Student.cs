@@ -2,7 +2,7 @@
 
 public class Student : User
 {
-    public string StudentNumber { get; set; }
+    public string StudentNumber {get; set;}
 
     public Student(string firstName, string lastName, string studentNumber)
         : base(firstName, lastName)
