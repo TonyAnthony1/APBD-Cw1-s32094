@@ -56,7 +56,7 @@ public class Rental
         var status = Active ? "Active" : "Finished";
         var penalty = PenaltyFee > 0 ? $" | Penalty: {PenaltyFee:C}" : "";
         var returnInfo = ReturnDate.HasValue ? $" | Return: {ReturnDate.Value:d}" : "";
-        return $"[{Id}] {status} | {User.FullName} -> {Equipment.Name} | " +
+        return $"[{Id}] {status} | {User.FirstName} {User.LastName} -> {Equipment.Name} | " +
                $"Since: {RentDate:d} | Due: {DueDate:d}{returnInfo}{penalty}";
     }
     
