@@ -14,7 +14,7 @@ public class UserService:IUserService
     {
         return _users.ToList();
     }
-    public User? GetById(int id)
+    public User? FindUser(int id)
     {
         return _users.FirstOrDefault(u => u.Id == id);
     }

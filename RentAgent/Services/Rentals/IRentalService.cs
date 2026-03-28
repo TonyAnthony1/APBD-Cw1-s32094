@@ -6,8 +6,8 @@ public interface IRentalService
 
 {
     
-    void RentEquipment(int userId, int equipmentId,int rentalDays);
-    void ReturnEquipment(int userId, DateTime returnDate);
+    string Rent(int userId, int equipmentId,int rentalDays);
+    string ReturnEquipment(int userId, DateTime returnDate);
     List<Rental> GetActiveRentalsForUser(int userId);
     List<Rental> GetOverdueRentals();
     List<Rental> GetAllRentals();

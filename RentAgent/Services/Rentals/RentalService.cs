@@ -20,52 +20,53 @@ public class RentalService: IRentalService
     }
   
 
-    public void RentEquipment(int userId, int equipmentId, int rentalDays)
+    public string Rent(int userId, int equipmentId, int rentalDays)
     {
-        var user = _userService.GetById(userId);
+        var user = _userService.FindUser(userId);
         if (user == null)
         {
-            Console.WriteLine("User not found.");
-            return;
+
+            return "User not found.";
         }
 
         var equipment = _equipmentService.GetEquipmentById(equipmentId);
         if (equipment == null)
         {
-            Console.WriteLine("Equipment not found.");
-            return;
+            
+            return "Equipment not found.";
         }
 
         if (!equipment.IsAvailable())
         {
-            Console.WriteLine($"Equipment \"{equipment.Name}\" is not available.");
-            return;
+
+            return $"Equipment \"{equipment.Name}\" is not available.";
         }
 
         var activeRentals = GetActiveRentalsForUser(userId);
         if (activeRentals.Count >= user.MaxActiveRentals)
         {
-            Console.WriteLine($"User \"{(object)user.Id}\" has achived limit of rentals  ({(object)user.MaxActiveRentals}).");            return;
+
+            return $"User \"{user.Id}\" has achived limit of rentals ({user.MaxActiveRentals}).";
         }
 
         var rental = new Rental(user,  DateTime.Now,equipment,DateTime.Now.AddDays(rentalDays));
         _rentals.Add(rental);
         equipment.Status = EquipmentStatus.Reserved;
+        return $"Success: '{equipment.Name}' rented to {user.FirstName} {user.LastName} until {rental.DueDate}.";
     }
 
-    public void ReturnEquipment(int rentalId, DateTime returnDate)
+    public string ReturnEquipment(int rentalId, DateTime returnDate)
     {
         var rental = _rentals.FirstOrDefault(r => r.Id == rentalId);
         if (rental == null)
         {
-            Console.WriteLine("Rental not found.");
-            return;
+           
+            return "Rental not found.";
         }
 
         if (!rental.Active)
         {
-            Console.WriteLine("Rental is finished.");
-            return;
+            return "Rental is finished.";
         }
 
         var overdueDays = (returnDate - rental.DueDate).Days;
@@ -73,6 +74,11 @@ public class RentalService: IRentalService
 
         rental.CompleteReturn(returnDate, penalty);
         rental.Equipment.Status = EquipmentStatus.Available;
+
+        if (penalty > 0)
+            return $"Returned '{rental.Equipment.Name}' late by {overdueDays} day(s). Penalty: {penalty}";
+
+        return $"Returned '{rental.Equipment.Name}' on time. No penalty.";
     }
 
     public List<Rental> GetActiveRentalsForUser(int userId)
