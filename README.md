@@ -36,24 +36,21 @@ jednego pliku w Config.
 
 Każda klasa ma jedną odpowiedzialność. Equipment i jego podtypy
 (Laptop, Phone, DisplayMonitor) przechowują dane sprzętu i wiedzą,
-jak się opisać (GetDescription). Rental wie, czy jest aktywne
+jak się opisać (GetDescription). System wypożyczeń wie, czy jest aktywne
 i przeterminowane. RentalService zajmuje się wyłącznie logiką
 wypożyczeń i zwrotów. EquipmentService zarządza kolekcją sprzętu.
-UserService — użytkownikami. Żaden serwis nie miesza tych
-odpowiedzialności.
+UserService — użytkownikami. Żaden serwis nie mieszają się.
 
 RentalPolicy w katalogu Config przechowuje stawkę kary (5 zł/dzień),
 maksymalną karę (200 zł) i domyślny czas wypożyczenia (14 dni) w jednym
-miejscu, zamiast rozrzucać te wartości po wielu klasach.
+miejscu.
 
 ## Coupling
 
 Serwisy komunikują się przez interfejsy: IEquipmentService,
 IUserService, IRentalService. RentalService przyjmuje interfejsy
 przez konstruktor, nie tworzy serwisów samodzielnie i nie zależy
-od ich konkretnych implementacji. Dzięki temu np. podmiana
-EquipmentService na wersję z bazą danych nie wymaga zmian
-w RentalService.
+od ich konkretnych implementacji.
 
 ## Dziedziczenie
 
