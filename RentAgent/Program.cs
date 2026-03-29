@@ -98,14 +98,15 @@ var lateDate = rentalLate.DueDate.AddDays(5);
 Console.WriteLine(rentalService.ReturnEquipment(rentalLate.Id, lateDate));
 
 Console.WriteLine("\n--- OVERDUE RENTALS ---");
-rentalService.Rent(employee2.Id, phone2.Id, RentalPolicy.DefaultRentalDays);
+
+Console.WriteLine(rentalService.Rent(employee2.Id, laptop2.Id, -5));
 
 var overdue = rentalService.GetOverdueRentals();
 if (overdue.Count == 0)
     Console.WriteLine("No overdue rentals.");
 else
     foreach (var r in overdue)
-        Console.WriteLine($"{r} (overdue: {r.GetOverdueDays().ToString()} days)");
+        Console.WriteLine($"  {r} (overdue: {r.GetOverdueDays().ToString()} days)");
 
 
 Console.WriteLine(rentalService.GenerateReport());
