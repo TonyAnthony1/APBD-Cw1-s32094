@@ -1,66 +1,66 @@
-# RentAgent - Uczelniana Wypożyczalnia Sprzętu
+# RentAgent - University Equipment Rental System
 
-Aplikacja konsolowa w C# do obsługi wypożyczalni sprzętu uczelnianego.
-Projekt na APBD, ćwiczenia 2.
+Console application in C# for managing university equipment rentals.
 
-## Uruchomienie
+## How to run
 
     dotnet run --project RentAgent
 
-Wymagany .NET 10 SDK.
+Requires .NET 10 SDK.
 
-## Struktura projektu
+## Project structure
 
-  RentAgent/
-├── Models/              Klasy domenowe (encje)
-│   ├── ModelEquipments/ Typy sprzętu (Laptop, Phone, DisplayMonitor)
-│   └── ModelUsers/      Typy użytkowników (Student, Employee)
-├── Services/            Logika biznesowa
-│   ├── Equipments/      Zarządzanie sprzętem
-│   ├── Users/           Zarządzanie użytkownikami
-│   └── Rentals/         Wypożyczenia, zwroty, raporty
-├── Config/              Reguły biznesowe
-├── Enums/               Statusy
-└── Program.cs           Scenariusz demonstracyjny
+    RentAgent/
+    ├── Models/              Domain classes (entities)
+    │   ├── ModelEquipments/ Equipment types (Laptop, Phone, DisplayMonitor)
+    │   └── ModelUsers/      User types (Student, Employee)
+    ├── Services/            Business logic
+    │   ├── Equipments/      Equipment management
+    │   ├── Users/           User management
+    │   └── Rentals/         Rentals, returns, reports
+    ├── Config/              Business rules
+    ├── Enums/               Status enumerations
+    └── Program.cs           Demo scenario
 
-## Podział klas i uzasadnienie
+## Class structure and reasoning
 
-Projekt dzieli się na trzy warstwy: model domenowy (Models), logikę
-biznesową (Services) i konfigurację reguł (Config). Program.cs pełni
-rolę warstwy prezentacji — wywołuje serwisy i wypisuje wyniki.
+The project is split into three layers: domain model (Models),
+business logic (Services) and rule configuration (Config).
+Program.cs acts as the presentation layer — it calls services
+and prints results.
 
-Taki podział wybrałem dlatego, że każda warstwa zajmuje się czymś
-innym i można ją zmieniać niezależnie. Dodanie nowego typu sprzętu
-wymaga tylko nowej klasy w Models. Zmiana stawki kary wymaga edycji
-jednego pliku w Config. 
+This separation was chosen so that each layer handles a different
+concern and can be changed independently. Adding a new equipment
+type only requires a new class in Models/ModelEquipments. Changing
+the penalty rate only requires editing one file in Config.
 
-## Kohezja
+## Cohesion
 
-Każda klasa ma jedną odpowiedzialność. Equipment i jego podtypy
-(Laptop, Phone, DisplayMonitor) przechowują dane sprzętu i wiedzą,
-jak się opisać (GetDescription). System wypożyczeń wie, czy jest aktywne
-i przeterminowane. RentalService zajmuje się wyłącznie logiką
-wypożyczeń i zwrotów. EquipmentService zarządza kolekcją sprzętu.
-UserService — użytkownikami. Żaden serwis nie mieszają się.
+Each class has a single responsibility. Equipment and its subtypes
+(Laptop, Phone, DisplayMonitor) store equipment data and know how
+to describe themselves (GetDescription). Rental knows whether it is
+active or overdue. RentalService handles only rental and return
+logic. EquipmentService manages the equipment collection.
+UserService manages users. No service mixes these responsibilities.
 
-RentalPolicy w katalogu Config przechowuje stawkę kary (5 zł/dzień),
-maksymalną karę (200 zł) i domyślny czas wypożyczenia (14 dni) w jednym
-miejscu.
+RentalPolicy in the Config folder stores the penalty rate (5 PLN/day),
+maximum penalty (200 PLN) and default rental period (14 days) in one
+place.
 
 ## Coupling
 
-Serwisy komunikują się przez interfejsy: IEquipmentService,
-IUserService, IRentalService. RentalService przyjmuje interfejsy
-przez konstruktor, nie tworzy serwisów samodzielnie i nie zależy
-od ich konkretnych implementacji.
+Services communicate through interfaces: IEquipmentService,
+IUserService, IRentalService. RentalService receives interfaces
+through its constructor, does not create services on its own and
+does not depend on their concrete implementations.
 
-## Dziedziczenie
+## Inheritance
 
-Equipment jest klasą abstrakcyjną, z której dziedziczą Laptop, Phone
-i DisplayMonitor. Każdy typ dzieli wspólne cechy (Id, Name, Status)
-i dodaje własne pola (np. Laptop: Ram, Processor).
+Equipment is an abstract class from which Laptop, Phone and
+DisplayMonitor inherit. Each type shares common fields (Id, Name,
+Status) and adds its own (e.g. Laptop: Ram, Processor).
 
-User jest klasą abstrakcyjną z podtypami Student (limit 2 wypożyczeń)
-i Employee (limit 5). Limit jest zdefiniowany jako abstrakcyjna
-właściwość MaxActiveRentals w typie użytkownika, nie jako stała
-w serwisie, bo to cecha danego rodzaju użytkownika.
+User is an abstract class with subtypes Student (limit of 2 rentals)
+and Employee (limit of 5). The limit is defined as an abstract
+property MaxActiveRentals in the user type, not as a constant in
+the service, because it is a characteristic of the user type itself.
