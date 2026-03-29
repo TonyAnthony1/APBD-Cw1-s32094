@@ -11,15 +11,17 @@ Wymagany .NET 10 SDK.
 
 ## Struktura projektu
 
-    RentAgent/
-    ├── Models/              Klasy domenowe (encje)
-    ├── Services/            Logika biznesowa
-    │   ├── Equipments/      Zarządzanie sprzętem
-    │   ├── Users/           Zarządzanie użytkownikami
-    │   └── Rentals/         Wypożyczenia, zwroty, raporty
-    ├── Config/              Reguły biznesowe
-    ├── Enums/               Statusy
-    └── Program.cs           Scenariusz demonstracyjny
+  RentAgent/
+├── Models/              Klasy domenowe (encje)
+│   ├── ModelEquipments/ Typy sprzętu (Laptop, Phone, DisplayMonitor)
+│   └── ModelUsers/      Typy użytkowników (Student, Employee)
+├── Services/            Logika biznesowa
+│   ├── Equipments/      Zarządzanie sprzętem
+│   ├── Users/           Zarządzanie użytkownikami
+│   └── Rentals/         Wypożyczenia, zwroty, raporty
+├── Config/              Reguły biznesowe
+├── Enums/               Statusy
+└── Program.cs           Scenariusz demonstracyjny
 
 ## Podział klas i uzasadnienie
 
